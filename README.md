@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # 🧠 AI-Powered Mood Journal
 
 ![Mood Journal Banner](https://img.shields.io/badge/AI-Powered-blue) ![Flask](https://img.shields.io/badge/Flask-Framework-green) ![MySQL](https://img.shields.io/badge/MySQL-Database-orange) ![Chart.js](https://img.shields.io/badge/Chart.js-Visualization-red)
@@ -293,4 +293,4 @@ If this project helped you, please give it a ⭐ on GitHub!
 =======
 # ai-mood-journal
 AI-powered emotion tracker with sentiment analysis and mood visualizations
->>>>>>> fab4bf405e6c45d30ec26339cf4743e21ecd20c5
+
