@@ -73,9 +73,9 @@ mood-journal/
    DB_USER=root
    DB_PASSWORD=Brian1@Kibu
    DB_NAME=mood_journal
-   HUGGING_FACE_TOKEN=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
+   HUGGING_FACE_TOKEN=h****KBJW
    FLUTTERWAVE_SECRET_KEY=******
-   FLUTTERWAVE_PUBLIC_KEY=FLWPUBK-435f48c259404572356f14e4b44b7797-X
+   FLUTTERWAVE_PUBLIC_KEY=FLWPUBK-43*******97-X
    ```
 
 5. **Run the application**
