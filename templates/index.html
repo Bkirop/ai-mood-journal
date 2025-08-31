@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Mood Journal | Emotion Tracker</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .journal-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .journal-section h2 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: inherit;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            width: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+            color: #2d3436;
+            width: auto;
+            margin-top: 1rem;
+        }
+
+        .btn-secondary:hover {
+            box-shadow: 0 5px 15px rgba(255, 234, 167, 0.4);
+        }
+
+        .result-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .emotion-result {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 15px;
+            color: white;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .subscription-banner {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: #8b4513;
+        }
+
+        .subscription-banner h3 {
+            margin-bottom: 0.5rem;
+            color: #8b4513;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .chart-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 1.3rem;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+
+        .loading {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+
+        .error {
+            background: #fee;
+            color: #c33;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .recent-entries {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .recent-entries h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .entry-item {
+            border-left: 4px solid #667eea;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .entry-emotion {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .entry-text {
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .entry-time {
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🧠 AI Mood Journal</h1>
+            <p>Track your emotions with AI-powered sentiment analysis</p>
+        </header>
+
+        <div class="subscription-banner">
+            <h3>🌟 Premium Features Available</h3>
+            <p>Unlock advanced mood analytics, streak tracking, and personalized insights for just KES 300/month</p>
+            <button class="btn btn-secondary" id="subscribeBtn">
+                Subscribe Now
+            </button>
+        </div>
+
+        <div class="main-content">
+            <div class="journal-section">
+                <h2>📝 Write Your Journal Entry</h2>
+                <form id="journalForm">
+                    <div class="form-group">
+                        <textarea 
+                            name="text" 
+                            placeholder="How are you feeling today? Share your thoughts, experiences, or emotions..."
+                            required
+                            maxlength="1000"
+                        ></textarea>
+                    </div>
+                    <button type="submit" class="btn" id="submitBtn">
+                        Analyze My Mood
+                    </button>
+                </form>
+            </div>
+
+            <div class="result-section">
+                <h2>🎯 Emotion Analysis</h2>
+                <div id="emotionResult" class="emotion-result">
+                    Write a journal entry to see your mood analysis
+                </div>
+                
+                <div class="stats-grid" id="statsGrid" style="display: none;">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalEntries">0</div>
+                        <div class="stat-label">Total Entries</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="avgConfidence">0%</div>
+                        <div class="stat-label">Avg Confidence</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="topEmotion">-</div>
+                        <div class="stat-label">Top Emotion</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h3>📊 Mood Distribution</h3>
+                <div class="chart-container">
+                    <canvas id="pieChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="chart-card">
+                <h3>📈 Mood Confidence Over Time</h3>
+                <div class="chart-container">
+                    <canvas id="lineChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="recent-entries" id="recentEntries" style="display: none;">
+            <h3>📖 Recent Journal Entries</h3>
+            <div id="entriesList"></div>
+        </div>
+    </div>
+
+    <script>
+        let lineChart = null;
+        let pieChart = null;
+        let allEntries = [];
+        
+        // Form submission handler
+        document.getElementById('journalForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const emotionResult = document.getElementById('emotionResult');
+            const formData = new FormData(e.target);
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Analyzing...';
+            emotionResult.textContent = 'AI is analyzing your emotions...';
+            emotionResult.classList.add('pulse');
+            
+            try {
+                const response = await fetch('/submit', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                
+                const result = await response.json();
+                
+                if (result.error) {
+                    throw new Error(result.error);
+                }
+                
+                // Display result with confidence
+                const emotion = result.emotion.charAt(0).toUpperCase() + result.emotion.slice(1);
+                const emotionEmoji = getEmotionEmoji(result.emotion);
+                emotionResult.innerHTML = `
+                    ${emotionEmoji} <strong>${emotion}</strong> (${result.confidence}% confidence)<br>
+                    <small>Detected by AI emotion analysis</small>
+                `;
+                
+                // Clear form
+                e.target.reset();
+                
+                // Reload charts and stats
+                await loadChartsAndStats();
+                
+            } catch (error) {
+                console.error('Error:', error);
+                emotionResult.innerHTML = `<span style="color: #ff6b6b;">❌ Error: ${error.message}</span>`;
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Analyze My Mood';
+                emotionResult.classList.remove('pulse');
+            }
+        });
+        
+        // Subscription handler
+        document.getElementById('subscribeBtn').addEventListener('click', async () => {
+            try {
+                const userEmail = prompt('Enter your email for subscription:') || 'user@example.com';
+                const userName = prompt('Enter your name:') || 'User';
+                
+                const formData = new FormData();
+                formData.append('user_email', userEmail);
+                formData.append('user_name', userName);
+                
+                const response = await fetch('/subscribe', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.payment_link) {
+                    window.open(result.payment_link, '_blank');
+                } else {
+                    alert('Error creating payment link');
+                }
+                
+            } catch (error) {
+                console.error('Subscription error:', error);
+                alert('Subscription service currently unavailable');
+            }
+        });
+        
+        // Load charts and statistics
+        async function loadChartsAndStats() {
+            try {
+                const response = await fetch('/entries');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch entries');
+                }
+                
+                const entries = await response.json();
+                allEntries = entries;
+                
+                if (entries.length === 0) {
+                    document.getElementById('emotionResult').textContent = 
+                        'No entries yet. Write your first journal entry above!';
+                    return;
+                }
+                
+                // Update statistics
+                updateStats(entries);
+                
+                // Update charts
+                updatePieChart(entries);
+                updateLineChart(entries);
+                
+                // Show recent entries
+                updateRecentEntries(entries.slice(0, 5));
+                
+                // Show stats grid and recent entries
+                document.getElementById('statsGrid').style.display = 'grid';
+                document.getElementById('recentEntries').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Failed to load data:', error);
+                document.getElementById('emotionResult').innerHTML = 
+                    '<span style="color: #ff6b6b;">❌ Failed to load mood data</span>';
+            }
+        }
+        
+        function updateStats(entries) {
+            const totalEntries = entries.length;
+            const avgConfidence = entries.reduce((sum, entry) => sum + (entry.confidence || 0), 0) / totalEntries;
+            
+            // Find most common emotion
+            const emotionCounts = {};
+            entries.forEach(entry => {
+                emotionCounts[entry.emotion] = (emotionCounts[entry.emotion] || 0) + 1;
+            });
+            
+            const topEmotion = Object.keys(emotionCounts).reduce((a, b) => 
+                emotionCounts[a] > emotionCounts[b] ? a : b
+            );
+            
+            document.getElementById('totalEntries').textContent = totalEntries;
+            document.getElementById('avgConfidence').textContent = Math.round(avgConfidence) + '%';
+            document.getElementById('topEmotion').textContent = topEmotion.charAt(0).toUpperCase() + topEmotion.slice(1);
+        }
+        
+        function updatePieChart(entries) {
+            const emotionCounts = {};
+            entries.forEach(entry => {
+                emotionCounts[entry.emotion] = (emotionCounts[entry.emotion] || 0) + 1;
+            });
+            
+            const colors = {
+                joy: '#FF6B6B',
+                happiness: '#FF6B6B',
+                sadness: '#4ECDC4',
+                anger: '#E17055',
+                fear: '#FDCB6E',
+                surprise: '#6C5CE7',
+                disgust: '#A29BFE',
+                neutral: '#95E1D3',
+                love: '#FD79A8',
+                optimism: '#00B894',
+                pessimism: '#636E72'
+            };
+            
+            if (pieChart) {
+                pieChart.destroy();
+            }
+            
+            const ctx = document.getElementById('pieChart').getContext('2d');
+            pieChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(emotionCounts).map(emotion => 
+                        emotion.charAt(0).toUpperCase() + emotion.slice(1)
+                    ),
+                    datasets: [{
+                        data: Object.values(emotionCounts),
+                        backgroundColor: Object.keys(emotionCounts).map(emotion => 
+                            colors[emotion] || '#95E1D3'
+                        ),
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                usePointStyle: true
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateLineChart(entries) {
+            // Prepare data for line chart - show confidence over time
+            const chartData = entries.slice().reverse().map((entry, index) => ({
+                x: new Date(entry.timestamp).toLocaleDateString(),
+                y: entry.confidence || 0,
+                emotion: entry.emotion
+            }));
+            
+            if (lineChart) {
+                lineChart.destroy();
+            }
+            
+            const ctx = document.getElementById('lineChart').getContext('2d');
+            lineChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: chartData.map(item => item.x),
+                    datasets: [{
+                        label: 'Emotion Confidence %',
+                        data: chartData.map(item => item.y),
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#667eea',
+                        pointBorderColor: '#fff',
+                        pointBorderWidth: 2,
+                        pointRadius: 5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: {
+                                display: true,
+                                text: 'Confidence (%)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Date'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true
+                        },
+                        tooltip: {
+                            callbacks: {
+                                afterLabel: function(context) {
+                                    const dataIndex = context.dataIndex;
+                                    return `Emotion: ${chartData[dataIndex].emotion}`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        function updateRecentEntries(entries) {
+            const entriesList = document.getElementById('entriesList');
+            
+            if (entries.length === 0) {
+                entriesList.innerHTML = '<p class="loading">No recent entries found.</p>';
+                return;
+            }
+            
+            entriesList.innerHTML = entries.map(entry => `
+                <div class="entry-item">
+                    <div class="entry-emotion">
+                        ${getEmotionEmoji(entry.emotion)} ${entry.emotion.charAt(0).toUpperCase() + entry.emotion.slice(1)} 
+                        (${entry.confidence}% confidence)
+                    </div>
+                    <div class="entry-text">${truncateText(entry.text, 100)}</div>
+                    <div class="entry-time">${formatDate(entry.timestamp)}</div>
+                </div>
+            `).join('');
+        }
+        
+        function getEmotionEmoji(emotion) {
+            const emojis = {
+                joy: '😊',
+                happiness: '😊',
+                sadness: '😢',
+                anger: '😠',
+                fear: '😨',
+                surprise: '😲',
+                disgust: '🤢',
+                neutral: '😐',
+                love: '🥰',
+                optimism: '😌',
+                pessimism: '😞'
+            };
+            return emojis[emotion] || '🎭';
+        }
+        
+        function truncateText(text, maxLength) {
+            if (text.length <= maxLength) return text;
+            return text.substring(0, maxLength) + '...';
+        }
+        
+        function formatDate(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }
+        
+        function destroyCharts() {
+            if (lineChart) {
+                lineChart.destroy();
+                lineChart = null;
+            }
+            if (pieChart) {
+                pieChart.destroy();
+                pieChart = null;
+            }
+        }
+        
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', () => {
+            loadChartsAndStats();
+        });
+        
+        // Handle page unload
+        window.addEventListener('beforeunload', () => {
+            destroyCharts();
+        });
+    </script>
+</body>
+</html>
