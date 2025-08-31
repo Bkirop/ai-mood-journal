@@ -196,7 +196,7 @@ python-dotenv==1.0.0
 
 ## 🎯 Demo
 
-**Live Demo**: [https://Bkrop.github.io/ai-mood-journal](https://Bkrop.github.io/ai-mood-journal)
+**Live Demo**: [https://Bkrop.github.io/ai-mood-journal](https://bkirop.github.io/ai-mood-journal/)
 
 **Screenshots**:
 - Dashboard with emotion analysis
