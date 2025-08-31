@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🧠 AI-Powered Mood Journal
 
 ![Mood Journal Banner](https://img.shields.io/badge/AI-Powered-blue) ![Flask](https://img.shields.io/badge/Flask-Framework-green) ![MySQL](https://img.shields.io/badge/MySQL-Database-orange) ![Chart.js](https://img.shields.io/badge/Chart.js-Visualization-red)
@@ -70,11 +71,11 @@ mood-journal/
    ```env
    DB_HOST=localhost
    DB_USER=root
-   DB_PASSWORD=your_mysql_password
+   DB_PASSWORD=Brian1@Kibu
    DB_NAME=mood_journal
-   HUGGING_FACE_TOKEN=your_hf_token_here
-   FLUTTERWAVE_SECRET_KEY=your_flutterwave_secret
-   FLUTTERWAVE_PUBLIC_KEY=your_flutterwave_public
+   HUGGING_FACE_TOKEN=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
+   FLUTTERWAVE_SECRET_KEY=******
+   FLUTTERWAVE_PUBLIC_KEY=FLWPUBK-435f48c259404572356f14e4b44b7797-X
    ```
 
 5. **Run the application**
@@ -175,23 +176,6 @@ ALTER TABLE entries ADD COLUMN confidence DECIMAL(5,2) DEFAULT 75.00;
 2. Use mock data for demonstration
 3. Enable GitHub Pages in repository settings
 
-### Full Stack Deployment
-**Recommended Platforms:**
-- **Heroku** - `git push heroku main`
-- **Railway** - Connect GitHub repo
-- **Render** - Deploy from GitHub
-- **PythonAnywhere** - Upload files via dashboard
-
-### Heroku Deployment Steps
-```bash
-# Install Heroku CLI
-# Create Procfile: web: python app.py
-heroku create ai-mood-journal
-heroku config:set HUGGING_FACE_TOKEN=your_token
-heroku config:set FLUTTERWAVE_SECRET_KEY=your_key
-git push heroku main
-```
-
 ## 🤝 Contributing
 
 1. Fork the repository
@@ -209,27 +193,6 @@ requests==2.31.0
 python-dotenv==1.0.0
 ```
 
-## 🔧 Environment Variables
-
-Create a `.env` file in your project root:
-
-```env
-# Database Configuration
-DB_HOST=localhost
-DB_USER=root
-DB_PASSWORD=your_mysql_password
-DB_NAME=mood_journal
-
-# API Keys
-HUGGING_FACE_TOKEN=hf_your_token_here
-FLUTTERWAVE_PUBLIC_KEY=FLWPUBK_TEST-your-public-key
-FLUTTERWAVE_SECRET_KEY=FLWSECK_TEST-your-secret-key
-FLUTTERWAVE_ENCRYPTION_KEY=your-encryption-key
-
-# Optional
-FLASK_ENV=development
-FLASK_DEBUG=1
-```
 
 ## 🎯 Demo
 
@@ -305,13 +268,9 @@ CREATE TABLE entries (
 - Include context about your day
 - Be honest about your feelings
 
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## 🆘 Support
 
-- 📧 Email: support@moodjournal.com
+- 📧 Email: briankirop@gmail.com
 - 🐛 Issues: [GitHub Issues](https://github.com/Bkirop/ai-mood-journal/issues)
 - 📚 Docs: [Project Wiki](https://github.com/Bkirop/ai-mood-journal/wiki)
 - 💬 Discussions: [GitHub Discussions](https://github.com/Bkirop/ai-mood-journal/discussions)
@@ -331,3 +290,7 @@ If this project helped you, please give it a ⭐ on GitHub!
 ---
 
 **Built with ❤️ in Kenya** | **Powered by AI** | **Open Source**
+=======
+# ai-mood-journal
+AI-powered emotion tracker with sentiment analysis and mood visualizations
+>>>>>>> fab4bf405e6c45d30ec26339cf4743e21ecd20c5
