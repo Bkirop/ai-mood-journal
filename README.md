@@ -35,7 +35,7 @@ mood-journal/
 │   └── index.html        # Frontend with charts
 ├── mood_journal.sql      # Database schema
 ├── requirements.txt      # Python dependencies
-├── .env                  # Environment variables (create this)
+├── .env                  # Environment variables 
 └── README.md            # This file
 ```
 
@@ -90,13 +90,11 @@ mood-journal/
 
 ### Hugging Face Setup
 1. Go to [Hugging Face](https://huggingface.co/settings/tokens)
-2. Create a new token (read access is sufficient)
-3. Add token to your `.env` file
 
 ### Flutterwave Setup
 1. Create account at [Flutterwave](https://flutterwave.com)
 2. Get your API keys from the dashboard
-3. Add keys to your `.env` file
+3. Added keys to  `.env` file
 
 ### Database Setup
 ```sql
@@ -173,8 +171,8 @@ ALTER TABLE entries ADD COLUMN confidence DECIMAL(5,2) DEFAULT 75.00;
 
 ### GitHub Pages (Static Demo)
 1. Create static version without Flask backend
-2. Use mock data for demonstration
-3. Enable GitHub Pages in repository settings
+2. Used mock data for demonstration
+3. Enabled GitHub Pages in repository settings
 
 ## 🤝 Contributing
 
