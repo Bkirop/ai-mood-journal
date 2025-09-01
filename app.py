@@ -1,6 +1,6 @@
 
 # =============================================================================
-# SOLUTION 2: Fixed app.py with better error handling
+# Fixed app.py with better error handling
 # =============================================================================
 
 from flask import Flask, render_template, request, jsonify
@@ -135,7 +135,7 @@ def get_entries():
         entries = cursor.fetchall()
         conn.close()
         
-        # Add default confidence if missing
+
         for entry in entries:
             if 'confidence' not in entry:
                 entry['confidence'] = 75.0  # Default confidence
