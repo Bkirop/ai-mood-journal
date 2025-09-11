@@ -13,7 +13,7 @@ DB_CONFIG = {
 # Hugging Face API Configuration
 HUGGING_FACE_API = {
     'url': 'https://api-inference.huggingface.co/models/j-hartmann/emotion-english-distilroberta-base',
-    'token': os.getenv('HUGGING_FACE_TOKEN', 'hf-*********-F')
+    'token': os.getenv('HUGGING_FACE_TOKEN', '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')
 }
 
 # Flutterwave Payment Configuration
