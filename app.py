@@ -1,6 +1,6 @@
 
 # =============================================================================
-# SOLUTION 2: Fixed app.py with better error handling
+# Fixed app.py with better error handling
 # =============================================================================
 
 from flask import Flask, render_template, request, jsonify

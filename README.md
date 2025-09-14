@@ -35,7 +35,7 @@ mood-journal/
 │   └── index.html        # Frontend with charts
 ├── mood_journal.sql      # Database schema
 ├── requirements.txt      # Python dependencies
-├── .env                  # Environment variables (create this)
+├── .env                  # Environment variables 
 └── README.md            # This file
 ```
 
@@ -90,13 +90,11 @@ mood-journal/
 
 ### Hugging Face Setup
 1. Go to [Hugging Face](https://huggingface.co/settings/tokens)
-2. Create a new token (read access is sufficient)
-3. Add token to your `.env` file
 
 ### Flutterwave Setup
 1. Create account at [Flutterwave](https://flutterwave.com)
 2. Get your API keys from the dashboard
-3. Add keys to your `.env` file
+3. Added keys to  `.env` file
 
 ### Database Setup
 ```sql
@@ -122,43 +120,6 @@ ALTER TABLE entries ADD COLUMN confidence DECIMAL(5,2) DEFAULT 75.00;
 - `GET /entries` - Retrieve all journal entries
 - `POST /subscribe` - Handle premium subscriptions
 - `GET /subscription-success` - Payment success callback
-
-## 🚨 Troubleshooting
-
-### Common Issues
-
-**Database Connection Error**
-```bash
-# Check MySQL is running
-sudo systemctl status mysql
-
-# Verify credentials in config.py
-```
-
-**Hugging Face 403 Error**
-```bash
-# Get new token from huggingface.co/settings/tokens
-# Update HUGGING_FACE_TOKEN in .env
-```
-
-**Missing Confidence Column**
-```sql
-ALTER TABLE entries ADD COLUMN confidence DECIMAL(5,2) DEFAULT 75.00;
-```
-
-**Flutterwave 401 Error**
-```bash
-# Verify your secret key format:
-# Should be: FLWSECK_TEST-xxxxx or FLWSECK-xxxxx (for live)
-```
-
-## 🔐 Security Notes
-
-- Never commit `.env` file to version control
-- Use environment variables for all sensitive data
-- Keep API tokens secure and rotate regularly
-- Use HTTPS in production
-
 ## 📈 Future Enhancements
 
 - [ ] User authentication and registration
@@ -173,8 +134,8 @@ ALTER TABLE entries ADD COLUMN confidence DECIMAL(5,2) DEFAULT 75.00;
 
 ### GitHub Pages (Static Demo)
 1. Create static version without Flask backend
-2. Use mock data for demonstration
-3. Enable GitHub Pages in repository settings
+2. Used mock data for demonstration
+3. Enabled GitHub Pages in repository settings
 
 ## 🤝 Contributing
 
