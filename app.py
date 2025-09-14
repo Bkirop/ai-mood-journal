@@ -135,7 +135,7 @@ def get_entries():
         entries = cursor.fetchall()
         conn.close()
         
-        # Add default confidence if missing
+
         for entry in entries:
             if 'confidence' not in entry:
                 entry['confidence'] = 75.0  # Default confidence
